@@ -300,6 +300,60 @@
       font-style: italic;
     }
 
+    /* E&E: official website */
+    .preview-ee {
+      background: linear-gradient(135deg, #ffffff 0%, #cbf2fa 60%, #90d4f3 100%);
+      border-bottom: 1px solid rgba(55,125,155,0.12);
+    }
+    .preview-ee-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    .preview-ee-inner img {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(55,125,155,0.2);
+    }
+    .preview-ee-label {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-style: italic;
+      color: rgba(55,125,155,0.25);
+    }
+    .preview-ee-swatches {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    /* Full-width card variant */
+    .card-full {
+      grid-column: 1 / -1;
+    }
+    .card-full .card-preview {
+      height: 140px;
+    }
+    .card-full .card-body {
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+    }
+    .card-full .card-body-text {
+      flex: 1;
+    }
+    .card-full .card-title { font-size: 26px; }
+    .card-full .card-desc  { margin-bottom: 0; }
+    .card-full .card-link  { flex-shrink: 0; }
+
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
@@ -397,6 +451,34 @@
           <p class="card-desc">Dedicated episode page for Season 2, Episode 2. A focused layout built around a single conversation.</p>
           <span class="card-link">
             View Design <span class="card-arrow" aria-hidden="true">→</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- E&E Official Website -->
+      <a href="E&E/src/index.html" class="card card-full anim d5" aria-label="View E&amp;E — Official Website">
+        <div class="card-preview preview-ee">
+          <div class="preview-ee-inner">
+            <img src="E&E/brandassets/logo.png" alt="" aria-hidden="true" />
+            <span class="preview-ee-label" aria-hidden="true">Essence &amp; Essentials</span>
+          </div>
+          <div class="preview-ee-swatches" aria-hidden="true">
+            <span class="swatch" style="background:#90d4f3;"></span>
+            <span class="swatch" style="background:#377d9b;"></span>
+            <span class="swatch" style="background:#64abe3;"></span>
+            <span class="swatch" style="background:#cbf2fa;border:1px solid rgba(55,125,155,0.2);"></span>
+            <span class="swatch" style="background:#a1a1a3;"></span>
+          </div>
+          <div class="card-bar" aria-hidden="true"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-body-text">
+            <p class="card-tag">Official Website</p>
+            <h2 class="card-title">Essence &amp; Essentials</h2>
+            <p class="card-desc">The polished, production-ready website. Clean white backdrop with the full E&amp;E blue brand palette — hero, vision, episode lineup, and listen sections.</p>
+          </div>
+          <span class="card-link">
+            View Website <span class="card-arrow" aria-hidden="true">→</span>
           </span>
         </div>
       </a>
