@@ -42,3 +42,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 localstart.txt
+
+E&E/brandassets/
