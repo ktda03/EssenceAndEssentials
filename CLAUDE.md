@@ -1,33 +1,26 @@
 # CLAUDE.md — Frontend Website Rules
 
+## Your Name
+- We will call you: "Essence"
+
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
 
 ## Reference Images
 - If a reference image is provided: match layout, spacing, typography, and color exactly. Swap in placeholder content (images via `https://placehold.co/`, generic copy). Do not improve or add to the design.
 - If no reference image: design from scratch with high craft (see guardrails below).
-- Screenshot your output, compare against reference, fix mismatches, re-screenshot. Do at least 2 comparison rounds. Stop only when no visible differences remain or user says so.
+
 
 ## Local Server
 - **Always serve on localhost** — never screenshot a `file:///` URL.
 - Start the dev server: `uv run serve.py` (serves the project root at `http://localhost:3000`)
-- `serve.py` lives in the project root. Start it in the background before taking any screenshots.
+- `serve.py` lives in the project root. 
 - If the server is already running, do not start a second instance.
 
-## Screenshot Workflow
-- Playwright is managed by uv. First-time setup (once per machine): `uv run playwright install chromium`
-- **Always screenshot from localhost:** `uv run screenshot.py http://localhost:3000`
-- Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
-- Optional label suffix: `uv run screenshot.py http://localhost:3000 label` → saves as `screenshot-N-label.png`
-- `screenshot.py` lives in the project root. Use it as-is.
-- After screenshotting, read the PNG from `temporary screenshots/` with the Read tool — Claude can see and analyze the image directly.
-- When comparing, be specific: "heading is 32px but reference shows ~24px", "card gap is 16px but should be 24px"
-- Check: spacing/padding, font size/weight/line-height, colors (exact hex), alignment, border-radius, shadows, image sizing
-
 ## Output Defaults
-- Single `index.html` file, all styles inline, unless user says otherwise
+- Tech Stack: Pure Semantic HTML5, Vanilla CSS3 (using CSS custom properties/variables), and Modern Vanilla JavaScript (ES6+).
+- Structure: Deliver separate, clean files: `index.html`, `style.css`, and `script.js` (or a single beautifully encapsulated HTML file if requested).
 - Tailwind CSS via CDN: `<script src="https://cdn.tailwindcss.com"></script>`
-- Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
 - Mobile-first responsive
 
 ## Brand Assets

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Essence & Essentials — Podcast</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --sky: #89C9E8;
+      --sky-dim: rgba(137,201,232,0.15);
+      --sky-glow: rgba(137,201,232,0.06);
+      --ink: #08080D;
+      --surface: #0F0F18;
+      --raised: #16162200;
+      --card: #13131C;
+      --border: rgba(137,201,232,0.12);
+      --text: #EDE9E3;
+      --muted: #6B6B80;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--ink);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.28;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    /* Typography */
+    .display { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes pulseRing {
+      0%   { transform: scale(0.95); opacity: 0.7; }
+      70%  { transform: scale(1.08); opacity: 0; }
+      100% { transform: scale(0.95); opacity: 0; }
+    }
+    @keyframes waveBar {
+      0%, 100% { transform: scaleY(0.4); }
+      50%       { transform: scaleY(1); }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50%       { transform: translateY(-12px) rotate(1.5deg); }
+    }
+    @keyframes shimmer {
+      from { background-position: -200% center; }
+      to   { background-position: 200% center; }
+    }
+
+    .anim-fade-up { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+    .anim-fade-in { animation: fadeIn 0.9s ease both; }
+
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+
+    /* Waveform bars */
+    .wave-bar {
+      display: inline-block;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--sky);
+      animation: waveBar 1.2s ease-in-out infinite;
+      transform-origin: bottom;
+    }
+
+    /* Glow blob */
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(8,8,13,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+    }
+    .nav-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--sky); }
+
+    .btn-sky {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--sky);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+    .btn-sky:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-sky:active { transform: translateY(0); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      color: var(--sky);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+    .btn-outline:hover {
+      background: var(--sky-dim);
+      border-color: var(--sky);
+      transform: translateY(-1px);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--sky);
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 9vw, 130px);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      max-width: 900px;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--sky);
+    }
+
+    .hero-sub {
+      max-width: 480px;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-top: 32px;
+      margin-bottom: 44px;
+    }
+
+    .hero-cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+    .hero-logo-float {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(260px, 28vw, 400px);
+      opacity: 0.18;
+      animation: drift 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: linear-gradient(to right, var(--sky), transparent);
+    }
+
+    /* Waveform decoration */
+    .waveform-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 36px;
+      margin-top: 48px;
+    }
+
+    /* Sections */
+    section { position: relative; }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 5vw, 64px);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    /* Vision section */
+    .vision-section {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .vision-image {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .vision-image img {
+      width: 100%;
+      display: block;
+      border-radius: 4px;
+    }
+    .vision-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--ink));
+      pointer-events: none;
+    }
+
+    .vision-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--text);
+      position: relative;
+      padding-left: 28px;
+    }
+    .vision-quote::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 4px; bottom: 4px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--sky), transparent);
+    }
+
+    .vision-host {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .vision-host-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .vision-host-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .vision-host-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text);
+    }
+    .vision-host-role {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-top: 2px;
+    }
+
+    /* Episodes */
+    .episodes-section {
+      padding: 100px 48px 120px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .episodes-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 60px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .episode-card {
+      background: var(--card);
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+    .episode-card:hover { background: #18182400; }
+    .episode-card:hover .episode-card-bg { opacity: 1; }
+    .episode-card:hover .ep-number { color: var(--sky); }
+    .episode-card:hover .ep-play { opacity: 1; transform: scale(1); }
+
+    .episode-card-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top left, rgba(137,201,232,0.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .ep-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      transition: color 0.3s ease;
+    }
+
+    .ep-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1.5px solid var(--border);
+      position: relative;
+    }
+    .ep-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .ep-pulse {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid rgba(137,201,232,0.4);
+      animation: pulseRing 2.5s ease-out infinite;
+    }
+
+    .ep-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .ep-title {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--sky);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .ep-org {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .ep-divider {
+      width: 32px; height: 1px;
+      background: var(--border);
+      margin-bottom: 20px;
+    }
+
+    .ep-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .ep-tag {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .ep-play {
+      position: absolute;
+      bottom: 32px;
+      right: 28px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--sky);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .ep-play svg { width: 14px; height: 14px; fill: var(--ink); margin-left: 2px; }
+
+    /* Divider line */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0 48px;
+    }
+
+    /* Subscribe section */
+    .subscribe-section {
+      padding: 100px 48px 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subscribe-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .platforms {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .platform-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+      cursor: pointer;
+    }
+    .platform-pill:hover {
+      border-color: var(--sky);
+      background: var(--sky-dim);
+      transform: translateY(-2px);
+    }
+    .platform-pill svg { width: 16px; height: 16px; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-brand img {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      opacity: 0.7;
+    }
+    .footer-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .hero-logo-float { display: none; }
+      .vision-section { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      .vision-image::after { display: none; }
+      .episodes-section { padding: 60px 24px; }
+      .episodes-grid { grid-template-columns: 1fr; }
+      .episodes-header { margin-bottom: 40px; }
+      .subscribe-section { padding: 60px 24px 80px; }
+      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+      .section-divider { margin: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="brandassets/logo.png" alt="Essence & Essentials logo" />
+      <span class="nav-logo-text">Essence &amp; Essentials</span>
+    </a>
+    <div class="nav-links">
+      <a href="#vision">About</a>
+      <a href="#episodes">Episodes</a>
+      <a href="#listen">Listen</a>
+    </div>
+    <a href="#listen" class="btn-sky">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      Listen Now
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <!-- Background glows -->
+    <div class="glow-blob" style="width:600px;height:600px;background:rgba(137,201,232,0.055);top:-100px;right:-80px;"></div>
+    <div class="glow-blob" style="width:400px;height:400px;background:rgba(137,201,232,0.04);bottom:0;left:10%;"></div>
+
+    <!-- Floating logo -->
+    <img src="brandassets/logo.png" alt="" class="hero-logo-float" aria-hidden="true" />
+
+    <div class="hero-eyebrow anim-fade-up">
+      Educational Podcast
+    </div>
+
+    <h1 class="hero-headline display anim-fade-up delay-100">
+      Exploring<br />
+      <em>Mind</em> &amp;<br />
+      Humanity
+    </h1>
+
+    <p class="hero-sub anim-fade-up delay-200">
+      Thoughtful conversations at the intersection of human health and the humanities — improving quality of life, one story at a time.
+    </p>
+
+    <div class="hero-cta anim-fade-up delay-300">
+      <a href="#episodes" class="btn-sky">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Start Listening
+      </a>
+      <a href="#vision" class="btn-outline">Our Mission</a>
+    </div>
+
+    <!-- Live waveform -->
+    <div class="waveform-row anim-fade-in delay-500" aria-hidden="true">
+      <span class="wave-bar" style="height:8px;animation-delay:0s;"></span>
+      <span class="wave-bar" style="height:16px;animation-delay:0.1s;"></span>
+      <span class="wave-bar" style="height:24px;animation-delay:0.05s;"></span>
+      <span class="wave-bar" style="height:12px;animation-delay:0.2s;"></span>
+      <span class="wave-bar" style="height:28px;animation-delay:0.15s;"></span>
+      <span class="wave-bar" style="height:20px;animation-delay:0.25s;"></span>
+      <span class="wave-bar" style="height:32px;animation-delay:0.08s;"></span>
+      <span class="wave-bar" style="height:14px;animation-delay:0.3s;"></span>
+      <span class="wave-bar" style="height:26px;animation-delay:0.18s;"></span>
+      <span class="wave-bar" style="height:18px;animation-delay:0.12s;"></span>
+      <span class="wave-bar" style="height:10px;animation-delay:0.22s;"></span>
+      <span class="wave-bar" style="height:30px;animation-delay:0.07s;"></span>
+      <span class="wave-bar" style="height:22px;animation-delay:0.28s;"></span>
+      <span class="wave-bar" style="height:16px;animation-delay:0.16s;"></span>
+      <span class="wave-bar" style="height:8px;animation-delay:0.35s;"></span>
+      <span class="wave-bar" style="height:24px;animation-delay:0.04s;"></span>
+      <span class="wave-bar" style="height:18px;animation-delay:0.32s;"></span>
+      <span class="wave-bar" style="height:28px;animation-delay:0.09s;"></span>
+      <span class="wave-bar" style="height:12px;animation-delay:0.24s;"></span>
+      <span class="wave-bar" style="height:20px;animation-delay:0.14s;"></span>
+    </div>
+
+    <div class="hero-scroll-hint anim-fade-in delay-700">
+      <span class="scroll-line"></span>
+      Scroll to explore
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="section-divider"></div>
+
+  <!-- VISION -->
+  <section id="vision">
+    <div class="vision-section">
+
+      <!-- Image -->
+      <div class="vision-image">
+        <img src="brandassets/Vision Statement.png" alt="Jasmine Lou — Host of Essence & Essentials" />
+      </div>
+
+      <!-- Text -->
+      <div>
+        <p class="section-label">Our Vision</p>
+        <blockquote class="vision-quote">
+          "Essence and Essentials is an educational podcast exploring the intersection between human health and the humanities — sharing how to improve quality of life through thoughtful conversations with guest speakers of all backgrounds."
+        </blockquote>
+
+        <div class="vision-host">
+          <div class="vision-host-avatar">
+            <img src="https://placehold.co/104x104/13131C/89C9E8?text=JL" alt="Jasmine Lou" />
+          </div>
+          <div>
+            <div class="vision-host-name">Jasmine Lou</div>
+            <div class="vision-host-role">Host &amp; Creator</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="section-divider"></div>
+
+  <!-- EPISODES -->
+  <section id="episodes">
+    <div class="episodes-section">
+
+      <div class="episodes-header">
+        <div>
+          <p class="section-label">Premier Lineup</p>
+          <h2 class="section-title display">Episodes 1–3</h2>
+        </div>
+        <p style="font-size:14px;color:var(--muted);max-width:320px;line-height:1.65;">
+          Three remarkable voices from architecture, music, and medicine — each with an essential story to tell.
+        </p>
+      </div>
+
+      <div class="episodes-grid">
+
+        <!-- Episode 1 -->
+        <div class="episode-card">
+          <div class="episode-card-bg"></div>
+          <div class="ep-number">Episode 01</div>
+          <div class="ep-avatar" style="position:relative;">
+            <div class="ep-pulse"></div>
+            <img src="https://placehold.co/144x144/13131C/89C9E8?text=AK" alt="Alfred Karram Jr" />
+          </div>
+          <div class="ep-name">Alfred<br/>Karram Jr</div>
+          <div class="ep-title">Architectural Interior Designer</div>
+          <div class="ep-org">AKJ Design Concepts LLC</div>
+          <div class="ep-divider"></div>
+          <div class="ep-tags">
+            <span class="ep-tag">Design</span>
+            <span class="ep-tag">Space</span>
+            <span class="ep-tag">Wellness</span>
+          </div>
+          <div class="ep-play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+
+        <!-- Episode 2 -->
+        <div class="episode-card">
+          <div class="episode-card-bg"></div>
+          <div class="ep-number">Episode 02</div>
+          <div class="ep-avatar" style="position:relative;">
+            <div class="ep-pulse" style="animation-delay:0.8s;"></div>
+            <img src="https://placehold.co/144x144/13131C/89C9E8?text=JL" alt="Jason Li" />
+          </div>
+          <div class="ep-name">Jason<br/>Li</div>
+          <div class="ep-title">Music Teacher &amp; Photographer</div>
+          <div class="ep-org">Purpose Prep Academy</div>
+          <div class="ep-divider"></div>
+          <div class="ep-tags">
+            <span class="ep-tag">Music</span>
+            <span class="ep-tag">Education</span>
+            <span class="ep-tag">Arts</span>
+          </div>
+          <div class="ep-play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+
+        <!-- Episode 3 -->
+        <div class="episode-card">
+          <div class="episode-card-bg"></div>
+          <div class="ep-number">Episode 03</div>
+          <div class="ep-avatar" style="position:relative;">
+            <div class="ep-pulse" style="animation-delay:1.6s;"></div>
+            <img src="https://placehold.co/144x144/13131C/89C9E8?text=MS" alt="Melody Song" />
+          </div>
+          <div class="ep-name">Melody<br/>Song</div>
+          <div class="ep-title">Nursing Student</div>
+          <div class="ep-org">University of Florida</div>
+          <div class="ep-divider"></div>
+          <div class="ep-tags">
+            <span class="ep-tag">Nursing</span>
+            <span class="ep-tag">Health</span>
+            <span class="ep-tag">UF</span>
+          </div>
+          <div class="ep-play">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lineup image -->
+      <div style="margin-top:48px;border:1px solid var(--border);border-radius:6px;overflow:hidden;opacity:0.85;">
+        <img src="brandassets/lineup.png" alt="Premier Lineup — Episodes 1 through 3" style="width:100%;display:block;" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="section-divider"></div>
+
+  <!-- SUBSCRIBE -->
+  <section id="listen">
+    <div class="subscribe-section">
+
+      <!-- Glow -->
+      <div class="glow-blob" style="width:500px;height:500px;background:rgba(137,201,232,0.05);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+      <div class="subscribe-inner">
+        <p class="section-label">Listen &amp; Subscribe</p>
+        <h2 class="section-title display" style="margin-bottom:16px;">
+          New episodes<br/><em style="font-style:italic;">every week</em>
+        </h2>
+        <p style="font-size:15px;color:var(--muted);line-height:1.75;margin-top:16px;">
+          Find Essence &amp; Essentials on your favourite podcast platform and never miss a conversation.
+        </p>
+
+        <div class="platforms">
+
+          <a href="#" class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--sky)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+            Spotify
+          </a>
+
+          <a href="#" class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--sky)"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm1 14.93V15a1 1 0 00-2 0v1.93A8.001 8.001 0 014 9h1a1 1 0 000-2H4a8 8 0 018-5v1a1 1 0 002 0V2a8 8 0 018 8h-1a1 1 0 000 2h1a8.001 8.001 0 01-7 7.93zM12 13a2 2 0 100-4 2 2 0 000 4z"/></svg>
+            Apple Podcasts
+          </a>
+
+          <a href="#" class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--sky)"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34l-.02-7.22A8.22 8.22 0 0019.59 9.7V6.25a4.82 4.82 0 01-3.77-4.25V2h3.45v.44a1.36 1.36 0 001.39 1.36 1.36 1.36 0 001.34-1.36V2H25v.44a4.83 4.83 0 01-3.77 4.25v3.45a8.22 8.22 0 003.77-1.46v3.44a11.66 11.66 0 01-3.77.88"/></svg>
+            TikTok
+          </a>
+
+          <a href="#" class="platform-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="color:var(--sky)"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            YouTube
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <img src="brandassets/logo.png" alt="Essence & Essentials" />
+      <span class="footer-text">Essence &amp; Essentials</span>
+    </div>
+    <span class="footer-copy">&copy; 2026 Essence &amp; Essentials. All rights reserved.</span>
+  </footer>
+
+</body>
+</html>
