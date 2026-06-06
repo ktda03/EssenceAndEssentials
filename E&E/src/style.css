@@ -753,6 +753,108 @@ nav {
 .platform-pill svg { width: 16px; height: 16px; color: var(--teal); flex-shrink: 0; }
 
 
+/* ── PHILANTHROPY ── */
+.philanthropy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 72vh;
+}
+
+.philanthropy-img-col {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.philanthropy-img-col img {
+  width: 62%;
+  max-width: 320px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+.philanthropy-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 50%, var(--bg) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.philanthropy-content {
+  padding: 80px 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.philanthropy-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(48px, 5.5vw, 80px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.philanthropy-title em {
+  color: var(--teal);
+  font-style: italic;
+}
+
+.philanthropy-org {
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.philanthropy-desc {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--muted);
+  max-width: 420px;
+  margin-bottom: 40px;
+}
+
+.btn-donate {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  background: var(--teal);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  align-self: flex-start;
+  transition: opacity 0.2s ease, transform 0.15s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.2s ease;
+  box-shadow:
+    0 8px 24px rgba(55,125,155,0.28),
+    0 2px 8px rgba(55,125,155,0.18);
+}
+.btn-donate:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 36px rgba(55,125,155,0.32),
+    0 4px 12px rgba(55,125,155,0.2);
+}
+.btn-donate:active  { transform: translateY(0); }
+.btn-donate:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; }
+
+
 /* ── FOOTER ── */
 footer {
   border-top: 1px solid var(--border);
@@ -818,6 +920,13 @@ footer {
   .episodes-sub { text-align: left; }
 
   .subscribe-wrap { padding: 60px 24px; }
+
+  .philanthropy { grid-template-columns: 1fr; }
+  .philanthropy-img-col { height: 50vw; min-height: 200px; }
+  .philanthropy-img-col img { width: 45%; }
+  .philanthropy-img-overlay { background: linear-gradient(to bottom, transparent 50%, var(--bg) 100%); }
+  .philanthropy-content { padding: 48px 24px; }
+
   footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
   .divider { margin: 0 24px; }
   .scroll-hint { display: none; }
