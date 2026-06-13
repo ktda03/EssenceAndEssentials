@@ -97,6 +97,15 @@
       <span class="scroll-line"></span>
       Scroll to explore
     </div>
+
+    <!-- ── SPONSOR BADGE ── -->
+    <div class="sponsor-badge anim-in d5" aria-label="Sponsor: Alfred Karram Jr">
+      <img src="../brandassets/Jasmine's Sponsor.png" alt="Sponsor" />
+      <div class="sponsor-badge-text">
+        <span class="sponsor-badge-label">Sponsored by</span>
+        <span class="sponsor-badge-name">Alfred Karram Jr</span>
+      </div>
+    </div>
   </section>
 
 
@@ -372,39 +381,91 @@
 
 
   <!-- ── PHILANTHROPY ── -->
-  <section id="philanthropy" aria-label="Philanthropy — Support MADD">
-    <div class="philanthropy">
+  <section id="philanthropy" aria-label="Philanthropy">
+    <div class="philanthropy-slider-wrap">
 
-      <div class="philanthropy-img-col">
-        <img src="../brandassets/MADD_logo-tagline_vert_2c-black.jpg"
-             alt="Mothers Against Drunk Driving" />
-        <div class="philanthropy-img-overlay" aria-hidden="true"></div>
+      <!-- Slide Track -->
+      <div class="philanthropy-track" id="philanthropyTrack">
+
+        <!-- Slide 1: MADD -->
+        <div class="philanthropy-slide">
+          <div class="philanthropy">
+            <div class="philanthropy-img-col">
+              <img src="../brandassets/MADD_logo-tagline_vert_2c-black.jpg"
+                   alt="Mothers Against Drunk Driving" />
+              <div class="philanthropy-img-overlay" aria-hidden="true"></div>
+            </div>
+            <div class="philanthropy-content">
+              <p class="section-label">Philanthropy</p>
+              <h2 class="philanthropy-title display">
+                <em>For Andrew.</em>
+              </h2>
+              <p class="philanthropy-org">Mothers Against Drunk Driving</p>
+              <p class="philanthropy-desc">
+                MADD works tirelessly to end impaired driving, support survivors, and build safer roads for every family. Your contribution honors lives taken too soon and funds real change in communities across the country.
+              </p>
+              <a href="https://give.madd.org/campaign/760920/donate"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn-donate"
+                 aria-label="Donate to MADD in memory of Andrew">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                Donate to MADD
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: CARE -->
+        <div class="philanthropy-slide">
+          <div class="philanthropy">
+            <div class="philanthropy-img-col philanthropy-img-col--care">
+              <img src="../brandassets/CARE_idIE90P5gi_1.png" alt="CARE" />
+              <div class="philanthropy-img-overlay" aria-hidden="true"></div>
+            </div>
+            <div class="philanthropy-content">
+              <p class="section-label">Philanthropy</p>
+              <h2 class="philanthropy-title display">
+                <em>Women &amp; Families.</em>
+              </h2>
+              <p class="philanthropy-org">CARE</p>
+              <p class="philanthropy-desc">
+                Women and families are a vital part of CARE's community based efforts to improve basic education, increase access to quality health care, and expand economic opportunity for all.
+              </p>
+              <a href="https://my.care.org/site/Donation"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn-donate"
+                 aria-label="Donate to CARE">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                Donate to CARE
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /track -->
+
+      <!-- Prev Arrow -->
+      <button class="slider-arrow slider-arrow--prev" id="philanthropyPrev" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <!-- Next Arrow -->
+      <button class="slider-arrow slider-arrow--next" id="philanthropyNext" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <!-- Dots -->
+      <div class="slider-dots" role="group" aria-label="Philanthropy slides">
+        <button class="slider-dot" data-index="0" aria-label="MADD"></button>
+        <button class="slider-dot" data-index="1" aria-label="CARE"></button>
       </div>
 
-      <div class="philanthropy-content">
-        <p class="section-label">Philanthropy</p>
-
-        <h2 class="philanthropy-title display">
-          <em>For Andrew.</em>
-        </h2>
-
-        <p class="philanthropy-org">Mothers Against Drunk Driving</p>
-
-        <p class="philanthropy-desc">
-          MADD works tirelessly to end impaired driving, support survivors, and build safer roads for every family. Your contribution honors lives taken too soon and funds real change in communities across the country.
-        </p>
-
-        <a href="https://give.madd.org/campaign/760920/donate"
-           target="_blank"
-           rel="noopener"
-           class="btn-donate"
-           aria-label="Donate to MADD in memory of Andrew">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-          </svg>
-          Donate to MADD
-        </a>
-      </div>
     </div>
   </section>
 
